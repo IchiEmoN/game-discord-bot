@@ -68,13 +68,20 @@ def save_notified(url):
 
 def main():
     notified = load_notified()
+
+    # 🎯 テスト通知（毎回送られる）
+    for game, info in game_feeds.items():
+        if info["webhook"]:
+            send_discord(info["webhook"], game, "✅ 通知Botが正常に起動しました（テスト）", "https://example.com")
+    
+    # 📡 通常のRSSチェック
     for game, info in game_feeds.items():
         feed = feedparser.parse(info["rss"])
         webhook = info["webhook"]
         if not webhook:
             print(f"No webhook URL for {game}, skipping")
             continue
-        for entry in feed.entries:
+        for entry in feed.entries[:1]:  # 最新1件だけ通知
             link = entry.link
             if link not in notified:
                 title = entry.title
