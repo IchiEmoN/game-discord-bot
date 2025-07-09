@@ -1,0 +1,34 @@
+name: RSS Notify
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # 15分ごとに実行
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install feedparser requests
+
+      - name: Run script
+        env:
+          HOOK_VALORANT: ${{ secrets.HOOK_VALORANT }}
+          HOOK_APEX: ${{ secrets.HOOK_APEX }}
+          HOOK_TARKOV: ${{ secrets.HOOK_TARKOV }}
+          HOOK_LOL: ${{ secrets.HOOK_LOL }}
+          HOOK_OVERWATCH: ${{ secrets.HOOK_OVERWATCH }}
+          HOOK_DBD: ${{ secrets.HOOK_DBD }}
+          HOOK_MONHUN: ${{ secrets.HOOK_MONHUN }}
+          HOOK_MAJAN: ${{ secrets.HOOK_MAJAN }}
+          HOOK_SF6: ${{ secrets.HOOK_SF6 }}
+        run: python rss_to_discord.py
