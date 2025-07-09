@@ -2,6 +2,7 @@ import feedparser
 import requests
 import os
 
+# 各ゲームのRSSフィードとWebhook
 game_feeds = {
     "VALORANT": {
         "rss": "https://playvalorant.com/ja-jp/news/",
@@ -43,6 +44,7 @@ game_feeds = {
 
 NOTIFIED_FILE = "notified_urls.txt"
 
+# Discordに通知を送る関数
 def send_discord(webhook_url, game, title, url):
     if not webhook_url:
         return
@@ -55,6 +57,7 @@ def send_discord(webhook_url, game, title, url):
     except Exception as e:
         print(f"Error sending to Discord: {e}")
 
+# 通知済みURLを読み込む
 def load_notified():
     try:
         with open(NOTIFIED_FILE, "r", encoding="utf-8") as f:
@@ -62,26 +65,23 @@ def load_notified():
     except FileNotFoundError:
         return set()
 
+# 通知済みURLを保存する
 def save_notified(url):
     with open(NOTIFIED_FILE, "a", encoding="utf-8") as f:
         f.write(url + "\n")
 
+# メイン処理
 def main():
     notified = load_notified()
 
-    # 🎯 テスト通知（毎回送られる）
-    for game, info in game_feeds.items():
-        if info["webhook"]:
-            send_discord(info["webhook"], game, "✅ 通知Botが正常に起動しました（テスト）", "https://example.com")
-    
-    # 📡 通常のRSSチェック
     for game, info in game_feeds.items():
         feed = feedparser.parse(info["rss"])
         webhook = info["webhook"]
         if not webhook:
             print(f"No webhook URL for {game}, skipping")
             continue
-        for entry in feed.entries[:1]:  # 最新1件だけ通知
+
+        for entry in feed.entries[:1]:  # 最新1件のみチェック
             link = entry.link
             if link not in notified:
                 title = entry.title
