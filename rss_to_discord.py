@@ -5,39 +5,39 @@ import os
 # 各ゲームのRSSフィードとWebhook
 game_feeds = {
     "VALORANT": {
-        "rss": "https://playvalorant.com/ja-jp/news/",
+        "rss": "https://game8.jp/feeds/feed_345.xml",  # Game8のRSS（非公式）
         "webhook": os.environ.get("HOOK_VALORANT")
     },
     "APEX": {
-        "rss": "https://www.ea.com/ja-jp/games/apex-legends/news",
+        "rss": "https://store.steampowered.com/feeds/news/app/1172470",  # Steam公式
         "webhook": os.environ.get("HOOK_APEX")
     },
     "TARKOV": {
-        "rss": "https://www.escapefromtarkov.com/news",
+        "rss": "https://www.escapefromtarkov.com/news/rss",  # 公式RSS対応（存在確認済み）
         "webhook": os.environ.get("HOOK_TARKOV")
     },
     "LOL": {
-        "rss": "https://www.leagueoflegends.com/ja-jp/news/",
+        "rss": "https://www.reddit.com/r/leagueoflegends/.rss",  # Reddit（英語圏）
         "webhook": os.environ.get("HOOK_LOL")
     },
     "OVERWATCH": {
-        "rss": "https://overwatch.blizzard.com/ja-jp/news/",
+        "rss": "https://www.reddit.com/r/Overwatch/.rss",  # Reddit
         "webhook": os.environ.get("HOOK_OVERWATCH")
     },
     "DBD": {
-        "rss": "https://deadbydaylight.com/news/rss",
+        "rss": "https://deadbydaylight.com/news/rss",  # 公式RSS
         "webhook": os.environ.get("HOOK_DBD")
     },
     "MONHUN": {
-        "rss": "https://nitter.net/MH_official_JP/rss",
+        "rss": "https://rsshub.app/twitter/user/MH_official_JP",  # RSSHub
         "webhook": os.environ.get("HOOK_MONHUN")
     },
     "MAHJONG_SOUL": {
-        "rss": "https://nitter.net/MahjongSoul_JP/rss",
+        "rss": "https://rsshub.app/twitter/user/MahjongSoul_JP",  # RSSHub
         "webhook": os.environ.get("HOOK_MAJAN")
     },
     "SF6": {
-        "rss": "https://nitter.net/StreetFighterJA/rss",
+        "rss": "https://rsshub.app/twitter/user/StreetFighterJA",  # RSSHub
         "webhook": os.environ.get("HOOK_SF6")
     }
 }
